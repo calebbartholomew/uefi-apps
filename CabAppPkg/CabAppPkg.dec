@@ -1,0 +1,32 @@
+## @file CabAppPkg.dec
+#
+# This Package provides UEFI applications written by Caleb Bartholomew (Rojuinex).
+#
+# Copyright (c) 2015, Caleb Bartholomew
+#
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = CabAppPkg
+  PACKAGE_GUID                   = 737c621c-7558-4664-83c4-76e4ee3fbb31
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[LibraryClasses]
+
+[Guids]
+
+
+[Protocols]
+
+
+[PcdsFeatureFlag]
+
+
+[PcdsFixedAtBuild]
+
+[PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]

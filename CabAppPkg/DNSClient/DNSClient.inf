@@ -1,0 +1,67 @@
+## @file DNSClient.inf
+#
+# Implementaiton of a simple DNSClient using the native UEFI UDP4 protocol.
+# The advantage to using the UEFI UDP4 protocol instead of using the StdLib
+# package and BSD sockets is that applications created with StdLib cannot
+# be executed from the firmware.  By using the UDP4 protocol directly we are
+# able to execute our application from the firmware, or any other location.
+#
+# WARNING: The current implementaiton is quite basic. Some things to note:
+#   * The client will not recurse itself and assumes the server has recursion available.
+#   * The client will not use DNS servers provided by the router but will use Google's 8.8.8.8 and 8.8.4.4 (this has to do with EFI not requesting or storing DNS servers during DHCP).
+#   * The client only understands A record respones.
+#   * The client does not check the status of the servers response.
+#   * Other issues may exist.  Read the source to get a feel for what it is doing.  Please report any issues if found.
+#
+# Copyright (c) 2015, Caleb Bartholomew
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DNSClient
+  FILE_GUID                      = 3ea8d8a0-218a-4500-b405-7369252d5337
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 0.1
+  ENTRY_POINT                    = UefiMain
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC Etc...
+#
+
+[Sources]
+  DNSClientMain.h
+  DNSClientMain.c
+  DNSClientImpl.h
+  DNSClientImpl.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  
+[LibraryClasses]
+  MemoryAllocationLib
+  BaseLib
+  BaseMemoryLib
+  DebugLib
+  ShellCommandLib
+  ShellLib
+  UefiLib
+  UefiBootServicesTableLib
+  UefiApplicationEntryPoint
+  NetLib
+  
+[Guids]
+
+[Ppis]
+
+[Protocols]
+  gEfiUdp4ServiceBindingProtocolGuid            # PROTOCOL ALWAYS_CONSUMED
+  gEfiUdp4ProtocolGuid                          # PROTOCOL ALWAYS_CONSUMED
+
+[FeaturePcd]
+
+[Pcd]
