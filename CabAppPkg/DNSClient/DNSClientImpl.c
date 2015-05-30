@@ -191,8 +191,6 @@ EFI_STATUS EFIAPI GetHostByName(DNSCLIENT_PRIVATE_DATA *Instance, CHAR8 *Hostnam
   Questions[0].QType  = HTONS(1);
   Questions[0].QClass = HTONS(1);
 
-  // Print(L"  Creating DNS Request Packet.\n");
-
   Request = CreateDNSPacket(Questions, 1);
 
   if(Request == NULL) {
@@ -203,16 +201,12 @@ EFI_STATUS EFIAPI GetHostByName(DNSCLIENT_PRIVATE_DATA *Instance, CHAR8 *Hostnam
   Request->Header.Rd = 1;
   Request->Header.Ad = 1;
 
-  // Print(L"  Sending DNS Packet\n");
-
   // Send request
   Status = SendDNSPacket(Instance, Request, L"8.8.8.8");
 
   if(EFI_ERROR(Status)) {
     goto CLEANUP;
   }
-
-  // Print(L"  Receiving DNS Packet\n");
 
   // ReceiveResponse
   Status = ReceiveDNSPacket(Instance, &Response);
@@ -266,17 +260,12 @@ DNS_PACKET* EFIAPI CreateDNSPacket(DNS_QUESTION Questions[], UINTN NumQuestions)
   UINTN       TotalStringSizes;
   UINTN       i, len;
 
-  // Print(L"    Creating dns packet...\n");
-
   Packet      = AllocateZeroPool(sizeof(DNS_PACKET));
 
   if(Packet == NULL) {
-    // Print(L"  Couldn't allocate dns packet\n");
     return NULL;
     //return EFI_OUT_OF_RESOURCES;
   }
-
-  // Print(L"    Creating string sizes...\n");
 
   TotalStringSizes = 0;
 
@@ -284,14 +273,11 @@ DNS_PACKET* EFIAPI CreateDNSPacket(DNS_QUESTION Questions[], UINTN NumQuestions)
     TotalStringSizes += Questions[i].QName[0];
   }
 
-  // Print(L"    Creating dns packet data...\n");
-
   Packet->DataLength = TotalStringSizes + (sizeof(DNS_QUESTION) - sizeof(CHAR8*)) * NumQuestions;
 
   Packet->Data = AllocateZeroPool(Packet->DataLength);
 
   if(Packet->Data == NULL) {
-    // Print(L"    Couldn't allocate Packet->Data\n");
     SafeRelease(Packet);
 
     return NULL;
