@@ -38,11 +38,11 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
     }
   } else {
 
-  if (ShellCommandLineGetCount(Package) < 1) {
+  if (ShellCommandLineGetCount(Package) < 2) {
     Print(L"To few arguments.");
     //ShellPrintHiiEx(-1, -1, NULL, STRING_TOKEN (STR_GEN_TOO_FEW), gShellDebug1HiiHandle);
     GotoStatus(EXIT, SHELL_INVALID_PARAMETER);
-   } else if (ShellCommandLineGetCount(Package) > 1) {
+   } else if (ShellCommandLineGetCount(Package) > 2) {
     Print(L"To many arguments.");
     //ShellPrintHiiEx(-1, -1, NULL, STRING_TOKEN (STR_GEN_TOO_MANY), gShellDebug1HiiHandle);
     GotoStatus(EXIT, SHELL_INVALID_PARAMETER);
@@ -88,7 +88,7 @@ EFI_STATUS EFIAPI UefiMain(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *Syste
   Status = EFI_SUCCESS;
 CLEANUP:
 
-
+  Print(L"Destroying private");
   DestroyDNSClient(Private);
 
   SafeRelease(Private);

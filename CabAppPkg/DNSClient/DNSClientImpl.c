@@ -122,10 +122,6 @@ EFI_STATUS EFIAPI CreateDNSClient(DNSCLIENT_PRIVATE_DATA *Instance) {
     Instance->Udp4Sb->DestroyChild(Instance->Udp4Sb, Instance->Udp4Child);
   }
 
-  // if((Instance->Udp4Sb != NULL)  && (Instance->Udp4WriteChild != NULL)) {
-  //   Instance->Udp4Sb->DestroyChild(Instance->Udp4Sb, Instance->Udp4WriteChild);
-  // }
-
   return Status;
 } // End of DNSClient
 
@@ -146,17 +142,13 @@ EFI_STATUS EFIAPI DestroyDNSClient(DNSCLIENT_PRIVATE_DATA *Instance) {
   }
 
   if(Instance->Udp4Child != NULL) {
-
+    // These are hainging at the moment... not sure why...
     Status = Instance->Udp4->Configure(Instance->Udp4, NULL);
 
     if(!EFI_ERROR(Status)) {
       Instance->Udp4Sb->DestroyChild(Instance->Udp4Sb, Instance->Udp4Child);
     }
   }
-
-  // if((Instance->Udp4Sb != NULL)  && (Instance->Udp4WriteChild != NULL)) {
-  //   Instance->Udp4Sb->DestroyChild(Instance->Udp4Sb, Instance->Udp4WriteChild);
-  // }
 
   return EFI_SUCCESS;
 } // End of DestoryDNSClient
