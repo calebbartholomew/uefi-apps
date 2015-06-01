@@ -5,7 +5,7 @@ This repo contains UEFI applications written by Caleb Bartholomew.
 
 ## Applications
 
-### DNSCLient
+### DNSClient
 A simple DNS client that can be executed out of the firmware.  Some known issues exist, read DNSClient.inf for more info.
 
 ## Compiling
